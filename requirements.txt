@@ -3,5 +3,7 @@ uvicorn
 python-dotenv
 huggingface-hub
 jinja2
+python-multipart
+
 
 
