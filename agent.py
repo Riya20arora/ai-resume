@@ -1,40 +1,42 @@
-import google.generativeai as genai
+# agent.py
 import os
+from dotenv import load_dotenv
+import google.generativeai as genai
 
-# Load API key
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+# Load .env values
+load_dotenv()
 
-model = genai.GenerativeModel("gemini-1.5-flash")
+API_KEY = os.getenv("GEMINI_API_KEY")
+if not API_KEY:
+    raise ValueError("❌ GEMINI_API_KEY not found in .env")
+
+# Configure Gemini
+genai.configure(api_key=API_KEY)
+
+# Choose recommended model
+MODEL_NAME = "gemini-1.5-flash"
 
 def analyze_resume(resume_text):
     prompt = f"""
-    You are an ATS Resume Analyzer.
-    Analyze this resume and give results in the following format only:
+You are an expert resume evaluator. Analyze the following resume text and provide:
 
-    ### Results
-    Brief summary.
+1. Top Skills (bullet points)
+2. Suggested Improvements (bullet points)
+3. ATS Score (0–100)
+4. Cover Letter Bullets (2–3 points)
 
-    ### Top Skills
-    List top 5 skills.
+Resume:
+{resume_text}
+"""
 
-    ### Suggested Improvements
-    5 bullet points.
-
-    ### Cover Letter Bullets
-    3 short bullets.
-
-    ### ATS Score
-    Score out of 100.
-
-    Resume:
-    {resume_text}
-    """
-    
     try:
+        model = genai.GenerativeModel(MODEL_NAME)
         response = model.generate_content(prompt)
         return response.text
+
     except Exception as e:
-        return f"Error: {str(e)}"
+        return f"❌ Error: {str(e)}"
+
 
 
 
