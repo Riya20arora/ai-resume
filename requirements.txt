@@ -1,9 +1,11 @@
 fastapi
 uvicorn
 python-dotenv
-huggingface-hub
+google-generativeai
 jinja2
 python-multipart
+
+
 
 
 
