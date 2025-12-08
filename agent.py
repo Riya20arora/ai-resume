@@ -14,7 +14,7 @@ if not API_KEY:
 genai.configure(api_key=API_KEY)
 
 # Choose recommended model
-MODEL_NAME = "gemini-1.5-flash"
+MODEL_NAME = "gemini-2.5-flash"
 
 def analyze_resume(resume_text):
     prompt = f"""
@@ -36,6 +36,7 @@ Resume:
 
     except Exception as e:
         return f"❌ Error: {str(e)}"
+
 
 
 
